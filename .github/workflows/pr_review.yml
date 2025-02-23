@@ -1,29 +1,32 @@
-name: PR Review with ChatGPT
+name: AI PR Review Workflow
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]  # Triggers when PR is opened, updated, or reopened
+    types: [opened, synchronize, reopened]
 
 jobs:
   review:
     runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}  # Make sure the key is referenced correctly
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v2
         with:
           python-version: '3.x'
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r .github/chat-gpt-pr-reviewer/requirements.txt
 
-      - name: Run PR review with ChatGPT
+      - name: Run PR Review Script
         run: |
           python pr_reviewer.py  # Run the Python script that sends PR diffs to ChatGPT
 
-#yash
+
+
