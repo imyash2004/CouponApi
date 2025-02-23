@@ -1,27 +1,26 @@
-name: PR Review with ChatGPT
+name: AI PR Review Workflow
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]  # Triggers when PR is opened, updated, or reopened
+    types: [opened, synchronize, reopened]  # Triggers for when a PR is opened, updated, or reopened
 
 jobs:
   review:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v2  # Checkout your code
 
-      - name: Set up Python
-        uses: actions/setup-python@v3
+      - name: Set up Python (for ChatGPT)
+        uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: '3.x'  # Python version
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r .github/chat-gpt-pr-reviewer/requirements.txt  # Install dependencies from the PR reviewer repo
 
-      - name: Run PR review with ChatGPT
+      - name: Run PR Review Script
         run: |
-          python pr_reviewer.py  # Run the Python script that sends PR diffs to ChatGPT
+          python .github/chat-gpt-pr-reviewer/github_reviewer.py  # Make sure this points to the correct file for reviewing
