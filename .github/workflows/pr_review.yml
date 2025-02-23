@@ -26,4 +26,7 @@ jobs:
 
       - name: Run PR Review Script
         run: |
-          python .github/chat-gpt-pr-reviewer/github_reviewer.py
+          python pr_reviewer.py  # Run the Python script that sends PR diffs to ChatGPT
+
+
+
